@@ -2,10 +2,17 @@
 
 import React, { useState } from 'react';
 import { NumberInput } from '@/components/NumberInput';
-import { NumberBlocks } from '@/components/NumberBlocks';
+import { AnimatedNumberGrouping } from '@/components/AnimatedNumberGrouping';
 
 export default function ExplorePage() {
   const [number, setNumber] = useState<number>(123);
+  const [key, setKey] = useState<number>(0);
+
+  // Reset animation when number changes
+  const handleNumberChange = (newValue: number) => {
+    setNumber(newValue);
+    setKey(prevKey => prevKey + 1);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -13,14 +20,18 @@ export default function ExplorePage() {
         <NumberInput 
           label="Enter a number between 1 and 9999"
           value={number}
-          onChange={setNumber}
+          onChange={handleNumberChange}
           min={1}
           max={9999}
         />
       </div>
 
       <div className="p-4 rounded-xl shadow-sm w-full max-w-4xl">
-        <NumberBlocks value={number} animate={true} hideTitlesIfEmpty={true} />
+        <AnimatedNumberGrouping 
+          key={key} 
+          value={number} 
+          className="animate-fade-in" 
+        />
       </div>
     </div>
   );

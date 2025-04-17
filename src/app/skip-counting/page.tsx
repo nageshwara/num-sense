@@ -84,28 +84,45 @@ export default function SkipCountingPage() {
       </div>
 
       <div className="flex gap-3 my-2">
-        <button
-          onClick={handlePlay}
-          disabled={isPlaying}
-          className={`px-4 py-2 rounded-lg font-medium ${isPlaying ? 'bg-gray-300 cursor-not-allowed' : 'bg-green-500 text-white hover:bg-green-600'}`}
-        >
-          {count === 0 ? 'Start' : 'Resume'}
-        </button>
-        
-        <button
-          onClick={handlePause}
-          disabled={!isPlaying}
-          className={`px-4 py-2 rounded-lg font-medium ${!isPlaying ? 'bg-gray-300 cursor-not-allowed' : 'bg-yellow-500 text-white hover:bg-yellow-600'}`}
-        >
-          Pause
-        </button>
-        
-        <button
-          onClick={handleReset}
-          className="px-4 py-2 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600"
-        >
-          Reset
-        </button>
+        {count >= maxCount ? (
+          <button
+            onClick={handleReset}
+            className="px-4 py-2 rounded-lg font-medium bg-green-500 text-white hover:bg-green-600"
+          >
+            Restart
+          </button>
+        ) : count === 0 ? (
+          <button
+            onClick={handlePlay}
+            className="px-4 py-2 rounded-lg font-medium bg-green-500 text-white hover:bg-green-600"
+          >
+            Start
+          </button>
+        ) : (
+          <>
+            {isPlaying ? (
+              <button
+                onClick={handlePause}
+                className="px-4 py-2 rounded-lg font-medium bg-yellow-500 text-white hover:bg-yellow-600"
+              >
+                Pause
+              </button>
+            ) : (
+              <button
+                onClick={handlePlay}
+                className="px-4 py-2 rounded-lg font-medium bg-green-500 text-white hover:bg-green-600"
+              >
+                Resume
+              </button>
+            )}
+            <button
+              onClick={handleReset}
+              className="px-4 py-2 rounded-lg font-medium bg-red-500 text-white hover:bg-red-600"
+            >
+              Restart
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

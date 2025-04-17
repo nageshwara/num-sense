@@ -14,7 +14,7 @@ export const NumberInput: React.FC<NumberInputProps> = ({
   value,
   onChange,
   max = 9999,
-  min = 1,
+  min = 0,
   className = ''
 }) => {
   const [error, setError] = useState<string>('');
@@ -25,19 +25,14 @@ export const NumberInput: React.FC<NumberInputProps> = ({
     if (isNaN(newValue)) {
       setError('Please enter a valid number');
       return;
-    }
-    
+    }  
     if (newValue > max) {
       setError(`Number must be ${max} or less`);
-      return;
-    }
-    
-    if (newValue < min) {
+    } else if (newValue < min) {
       setError(`Number must be at least ${min}`);
-      return;
-    }
-    
-    setError('');
+    } else {
+      setError('');
+    }    
     onChange(newValue);
   };
 

@@ -13,8 +13,8 @@ export const NumberBlocks: React.FC<NumberBlocksProps> = ({
   className = '',
   hideTitlesIfEmpty = true
 }) => {
-  if (value < 0 || value > 9999) {
-    return <div className="text-red-500">Please enter a number between 0 and 9999</div>;
+  if (value < 0) {
+    return <div className="text-red-500">Please enter a valid number</div>;
   }
 
   // Extract digit places
@@ -28,14 +28,14 @@ export const NumberBlocks: React.FC<NumberBlocksProps> = ({
       {thousands > 0 && (
         <div className="flex flex-col">
           <div className="text-2xl font-medium mb-0.5">{thousands} x 1000</div>
-          <div className="grid grid-cols-10 gap-1">
+          <div className="flex flex-wrap gap-3">
             {Array(thousands).fill(0).map((_, i) => (
               <div key={`thousand-${i}`} className="relative">
                 <div 
-                  className={`bg-gray-800 block-3d ${animate ? 'animate-scale-in' : ''}`}
-                  style={{ animationDelay: `${i * 30}ms` }}
+                  className={animate ? 'animate-scale-in' : ''}
+                  style={{ animationDelay: `${i * 100}ms` }}
                 >
-                  <div className="grid grid-cols-10 grid-rows-10">
+                  <div className="grid grid-cols-10 grid-rows-10 max-w-[140px]">
                     {Array(100).fill(0).map((_, j) => {
                       const row = Math.floor(j / 10);
                       const col = j % 10;
@@ -44,7 +44,7 @@ export const NumberBlocks: React.FC<NumberBlocksProps> = ({
                       return (
                         <div 
                           key={j} 
-                          className={`border-[0.5px] w-3.5 h-3.5 border-gray-600 
+                          className={`border-[0.5px] w-3.5 h-3.5 border-black
                             ${isEvenSquare ? 'bg-white' : 'bg-black'}`}
                         ></div>
                       );
@@ -60,43 +60,34 @@ export const NumberBlocks: React.FC<NumberBlocksProps> = ({
       {(!hideTitlesIfEmpty || hundreds > 0) && (
         <div className="flex flex-col">
           <div className="text-2xl font-medium mb-0.5">{hundreds} x 100</div>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-3">
             {hundreds > 0 && Array(hundreds).fill(0).map((_, i) => (
               <div 
                 key={`hundred-${i}`} 
                 className="relative"
               >
                 <div 
-                  className={`bg-blue-100 block-3d ${animate ? 'animate-scale-in' : ''}`}
-                  style={{ animationDelay: `${(i) * 30}ms` }}
+                  className={animate ? 'animate-scale-in' : ''}
+                  style={{ animationDelay: `${(i) * 100}ms` }}
                 >
-                  <div className="grid grid-cols-10 grid-rows-10">
-                    {Array(10).fill(0).map((_, row) => (
-                      // Create each row with a different rainbow color
-                      <React.Fragment key={`row-${row}`}>
-                        {Array(10).fill(0).map((_, col) => {
-                          // Get rainbow colors - one color per row
-                          const colors = [
-                            'bg-red-500',    // Red
-                            'bg-orange-500', // Orange
-                            'bg-yellow-400', // Yellow
-                            'bg-green-500',  // Green
-                            'bg-teal-500',   // Teal
-                            'bg-blue-500',   // Blue
-                            'bg-indigo-500', // Indigo
-                            'bg-purple-500', // Purple
-                            'bg-pink-500',   // Pink
-                            'bg-rose-500',   // Rose
-                          ];
-                          return (
-                            <div 
-                              key={`${row}-${col}`} 
-                              className={`border-[0.5px] w-3.5 h-3.5 border-black ${colors[row]}`}
-                            ></div>
-                          );
-                        })}
-                      </React.Fragment>
-                    ))}
+                  <div className="grid grid-cols-10 grid-rows-10 max-w-[140px]">
+                  {Array(10).fill(0).map((_, row) => (
+                        <React.Fragment key={`row-${row}`}>
+                          {Array(10).fill(0).map((_, col) => {
+                            const colors = [
+                              'bg-red-300', 'bg-orange-300', 'bg-yellow-400', 'bg-green-300', 
+                              'bg-teal-300', 'bg-blue-300', 'bg-indigo-300', 'bg-purple-300',
+                              'bg-pink-300', 'bg-rose-300',
+                            ];
+                            return (
+                              <div 
+                                key={`${row}-${col}`} 
+                                className={`border-[0.5px] w-3.5 h-3.5 border-black ${colors[row]}`}
+                              ></div>
+                            );
+                          })}
+                        </React.Fragment>
+                      ))}                    
                   </div>
                 </div>
               </div>
@@ -108,16 +99,16 @@ export const NumberBlocks: React.FC<NumberBlocksProps> = ({
       {(!hideTitlesIfEmpty || tens > 0) && (
         <div className="flex flex-col">
           <div className="text-2xl font-medium mb-0.5">{tens} x 10</div>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-3">
             {tens > 0 && Array(tens).fill(0).map((_, i) => (
               <div key={`ten-${i}`} className="relative">
                 <div 
-                  className={`bg-sky-400 block-3d ${animate ? 'animate-slide-in' : ''}`}
-                  style={{ animationDelay: `${(i) * 30}ms` }}
+                  className={animate ? 'animate-slide-in' : ''}
+                  style={{ animationDelay: `${(i) * 100}ms` }}
                 >
                   <div className="grid grid-cols-1 grid-rows-10">
                     {Array(10).fill(0).map((_, j) => (
-                      <div key={j} className="border-[0.5px] border-black w-6 h-6 bg-sky-300"></div>
+                      <div key={j} className="border-[0.5px] border-black w-4 h-4 bg-sky-300"></div>
                     ))}
                   </div>
                 </div>
@@ -130,11 +121,11 @@ export const NumberBlocks: React.FC<NumberBlocksProps> = ({
       {(!hideTitlesIfEmpty || ones > 0) && (
       <div className="flex flex-col">
         <div className="text-2xl font-medium mb-0.5">{ones} x 1</div>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-3">
           {ones > 0 && Array(ones).fill(0).map((_, i) => (
             <div key={`one-${i}`} className="relative">
               <div 
-                className={`w-6 h-6 bg-orange-600 block-3d ${animate ? 'animate-bounce-in' : ''}`}
+                className={`w-5 h-5 bg-orange-600  ${animate ? 'animate-bounce-in' : ''}`}
                 style={{ animationDelay: `${(i) * 30}ms` }}
               ></div>
             </div>
